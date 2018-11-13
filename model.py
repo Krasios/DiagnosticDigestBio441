@@ -25,3 +25,35 @@ class OrientedSample:
         self.sequence = sequence[:insertPos[0]-1] + insertArea + sequence[insertPos[1]:]
         self.hasIntron = hasIntron
         self.isForward = isForward
+
+class RestrictionEnzyme:
+
+    def __init__(self, sequence, cutPos, buffers):
+        self.patterns = self.getPatterns(sequence,cutPos)
+        self.buffers = buffers
+
+    def getPatterns(self,sequence,cutPos):
+        comp = {'A':'T','C':'G','T':'A','G':'C'}
+        self.topPattern = self.getRegexPattern(sequence)
+        self.topCut = len(sequence) + cutPos[0]
+        self.bottomPattern = self.getRegexPattern(''.join([comp[b] for b in sequence[::-1]]))
+        self.bottomCut = 0 - cutPos[1]
+
+    def getRegexPattern(self,sequence):
+        slc = {
+        'A':'A',
+        'T':'T',
+        'G':'G',
+        'C':'C',
+        'B':'[^A]',
+        'V':'[^T]',
+        'H':'[^G]',
+        'D':'[^C]',
+        'W':'[AT]',
+        'R':'[AG]',
+        'M':'[AC]',
+        'K':'[TG]',
+        'Y':'[TC]',
+        'S':'[GC]',
+        'N':'[ATGC]'}
+        return '(?=('+''.join([slc[b] for b in sequence])+'))'
