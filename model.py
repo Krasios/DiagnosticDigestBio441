@@ -1,11 +1,14 @@
 class Sample:
-    def __init__(self,sequence,insertPos,intronPos):
+
+    def __init__(self,sequence,insertPos,intronPos,circular):
+        self.circular = circular
         self.gDNA1 = OrientedSample(sequence,insertPos,intronPos,True,True)
         self.gDNA2 = OrientedSample(sequence,insertPos,intronPos,True,False)
         self.cDNA1 = OrientedSample(sequence,insertPos,intronPos,False,True)
         self.cDNA2 = OrientedSample(sequence,insertPos,intronPos,False,False)
 
 class OrientedSample:
+
     def __init__(self,sequence,insertPos,intronPos,hasIntron,isForward):
         insertArea = sequence[insertPos[0]-1:insertPos[1]]
         comp = {'A':'T','C':'G','T':'A','G':'C'}
@@ -29,14 +32,14 @@ class OrientedSample:
 class RestrictionEnzyme:
 
     def __init__(self, sequence, cutPos, buffers):
-        self.patterns = self.getPatterns(sequence,cutPos)
+        self.getPatterns(sequence,cutPos)
         self.buffers = buffers
 
     def getPatterns(self,sequence,cutPos):
         comp = {'A':'T','C':'G','T':'A','G':'C'}
         self.topPattern = self.getRegexPattern(sequence)
         self.topCut = len(sequence) + cutPos[0]
-        self.bottomPattern = self.getRegexPattern(''.join([comp[b] for b in sequence[::-1]]))
+        self.bottomPattern = self.getRegexPattern(''.join([comp[b] if b in comp.keys() else b for b in sequence[::-1]]))
         self.bottomCut = 0 - cutPos[1]
 
     def getRegexPattern(self,sequence):
