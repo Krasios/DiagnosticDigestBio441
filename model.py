@@ -25,6 +25,7 @@ class OrientedSample:
         if hasIntron and not isForward:
             introns = [(insertPos[1]+insertPos[0]-x[1],insertPos[1]+insertPos[0]-x[0]) for x in intronPos]
         self.introns = introns
+        self.insertPos = insertPos
         self.sequence = sequence[:insertPos[0]-1] + insertArea + sequence[insertPos[1]:]
         self.hasIntron = hasIntron
         self.isForward = isForward
@@ -36,7 +37,7 @@ class RestrictionEnzyme:
         self.buffers = buffers
 
     def getPatterns(self,sequence,cutPos):
-        comp = {'A':'T','C':'G','T':'A','G':'C'}
+        comp = {'A':'T','C':'G','T':'A','G':'C','B':'V','V':'B','H':'D','D':'H','R':'Y','Y':'R','M':'K','K':'M'}
         self.topPattern = self.getRegexPattern(sequence)
         self.topCut = len(sequence) + cutPos[0]
         self.bottomPattern = self.getRegexPattern(''.join([comp[b] if b in comp.keys() else b for b in sequence[::-1]]))
