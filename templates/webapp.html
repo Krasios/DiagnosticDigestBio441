@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+  <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
+    <style>
+      input {
+        margin: 5px 3px;
+      }
+      .param {
+        font-size: 1.17em;
+      }
+      .form-element {
+        margin: 25px 0 10px 25px;
+      }
+      #introns {
+        font-weight:900;
+      }
+    </style>
+    <script type=text/javascript>
+      function addIntron() {
+        var iBegin = document.createElement("input");
+        iBegin.setAttribute('type','number');
+        iBegin.setAttribute('name','intronBegin');
+        var iEnd = document.createElement("input");
+        iEnd.setAttribute('type','number');
+        iEnd.setAttribute('name','intronEnd');
+        var introns = document.getElementById("introns");
+        introns.append(document.createElement("br"));
+        introns.appendChild(iBegin);
+        introns.appendChild(iEnd);
+      }
+    </script>
+  </head>
+  <body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+           <li>{{ message }}</li>
+         {% endfor %}
+        </ul>
+     {% endif %}
+    {% endwith %}
+    <h1>Diagnostic Digest Enzyme Suggester</h1>
+      <div>
+        <form method=post enctype=multipart/form-data>
+          <div class="form-element">
+            <label><span class="param">Sequence: (.txt files only)</span> <br/>
+              <input type=file name=sequence>
+            </label>
+            <br/>
+            <br/>
+              DNA is: 
+              <input type="radio" name="circular" value="True" checked> Circular
+              <input type="radio" name="circular" value="False"> Linear
+          </div>
+          <div class="form-element">
+            <label><span class="param">Insert: </span><br/>
+              <span>
+                <input type=number name=insertBegin placeholder="Beginning Coordinate">
+                <input type=number name=insertEnd placeholder="Ending Coordinate">
+              </span>
+            </label>
+          </div>
+          <div class="form-element">
+            <label><span class="param">Introns: <i class="fas fa-plus-circle" onClick=addIntron()></i></span>
+              <div id=introns name=introns>
+              </div>
+            </label>
+          </div>
+          <div class="form-element">
+            <label><span class="param">Ladder: </span>
+              <select name=ladder>
+                <option value="0" selected>Promega 1kB</option>
+                <option value="1">Promega 100bp</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-element">
+            <label><span class="param">Enzymes: (.csv files only) </span><br/>
+              <input type=file name=enzymes>
+            </label>
+          </div>
+         <input type="submit" value="Get Enzyme Suggestions!"><br>
+       </form>
+    </div>
+  </body>
+</html>

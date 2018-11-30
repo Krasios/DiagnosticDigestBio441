@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+  <head>
+    <style>
+      ol {
+        list-style-type: decimal-leading-zero;
+      }
+      li {
+        font-size: 1.17em;
+      }
+    </style>
+  </head>
+  <body>
+    {% with iEnzymes = results.identity %}
+      {% if iEnzymes %}
+        <h2>Top Enzyme(s) for Determining Insert Identity:</h2>
+        <ol>
+          {% for iEnzyme in iEnzymes %}
+           <li>{{ iEnzyme[1] }}</li>
+         {% endfor %}
+        </ol>
+     {% endif %}
+    {% endwith %}
+    {% with oEnzymes = results.orientation %}
+      {% if oEnzymes %}
+        <h2>Top Enzyme(s) for Determining Insert Orientation:</h2>
+        <ol>
+          {% for oEnzyme in oEnzymes %}
+           <li>{{ oEnzyme[1] }}</li>
+         {% endfor %}
+        </ol>
+     {% endif %}
+    {% endwith %}
+  </body>
+</html>

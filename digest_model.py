@@ -19,22 +19,9 @@ class SingleDigest:
 
     def processSampleCuts(self,sample):
         if (self.gDNA1Cuts == [] and self.gDNA2Cuts == [] and self.cDNA1Cuts == [] and self.cDNA2Cuts == []):
-            self.plasmidCut = False
-            self.insertCut = False
-            self.intronCut = False
+            self.hasCut = False
         else:
-            self.plasmidCut = (any((sample.gDNA1.insertPos[0]>x or x>=sample.gDNA1.insertPos[1]) for x in self.gDNA1Cuts) or
-            any((sample.gDNA2.insertPos[0]>x or x>=sample.gDNA2.insertPos[1]) for x in self.gDNA2Cuts) or
-            any((sample.cDNA1.insertPos[0]>x or x>=sample.cDNA1.insertPos[1]) for x in self.cDNA1Cuts) or
-            any((sample.cDNA2.insertPos[0]>x or x>=sample.cDNA2.insertPos[1]) for x in self.cDNA2Cuts))
-            self.insertCut = (any(sample.gDNA1.insertPos[0]<=x<sample.gDNA1.insertPos[1] for x in self.gDNA1Cuts) or
-            any(sample.gDNA2.insertPos[0]<=x<sample.gDNA2.insertPos[1] for x in self.gDNA2Cuts) or
-            any(sample.cDNA1.insertPos[0]<=x<sample.cDNA1.insertPos[1] for x in self.cDNA1Cuts) or
-            any(sample.cDNA2.insertPos[0]<=x<sample.cDNA2.insertPos[1] for x in self.cDNA2Cuts))
-            self.intronCut = (any(y[0]<=x<y[1] for x in self.gDNA1Cuts for y in sample.gDNA1.introns) or
-            any(y[0]<=x<y[1] for x in self.gDNA2Cuts for y in sample.gDNA2.introns) or
-            any(y[0]<=x<y[1] for x in self.cDNA1Cuts for y in sample.cDNA1.introns) or
-            any(y[0]<=x<y[1] for x in self.cDNA2Cuts for y in sample.cDNA2.introns))
+            self.hasCut = True
             self.gDNA1Frags = self.processCuts(sample.circular,len(sample.gDNA1.sequence),self.gDNA1Cuts)
             self.gDNA2Frags = self.processCuts(sample.circular,len(sample.gDNA2.sequence),self.gDNA2Cuts)
             self.cDNA1Frags = self.processCuts(sample.circular,len(sample.cDNA1.sequence),self.cDNA1Cuts)
