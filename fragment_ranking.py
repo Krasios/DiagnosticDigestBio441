@@ -54,8 +54,7 @@ def canDistinguish(frags,otherFrags,ladder):
         nearestFrag = closestBottom if ((closestBottom != frag) and (abs(closestTop-frag)>abs(closestBottom-frag))) else closestTop
         if otherFrags == []:
             nearestFrag = ladder[-1] if (abs(frag-ladder[-1])>abs(frag-ladder[0])) else ladder[0]
-            score += twoFragCompare(frag,nearestFrag,ladder)
-            score *= 2
+            score += twoFragCompare(frag,nearestFrag,ladder) * 2
         else:
             score += twoFragCompare(frag,nearestFrag,ladder)
     score /= (len(frags) if frags!=[] else 1)
