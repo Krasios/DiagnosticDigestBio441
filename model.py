@@ -19,6 +19,7 @@ class OrientedSample:
                 insertArea += sequence[beginEx:intron[0]-1]
                 beginEx = intron[1]
             insertArea += sequence[beginEx:insertPos[1]]
+            insertPos = (insertPos[0],insertPos[0]+len(insertArea)-1)
         if not isForward:
             insertArea = ''.join([comp[x] for x in insertArea[::-1]])
         introns = intronPos
