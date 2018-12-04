@@ -2,4 +2,13 @@
 
 Meant to provide recommendations for restriction enzyme combinations when performing diagnostic digests
 
-TypeIIB restriction enzymes should be listed twice in enzyme input, once per side of the recognition sequence
+Input files needed:
+1. .txt containing sequence of construct with gDNA insert in forward orientation
+2. .csv containing enzyme names, recognition sites in one letter nomenclature, cut positions offset from end of recognition site
+# Running the application
+1. Clone repo 
+2. Install Flask:
+  pip install Flask
+3. Run UI:
+  python suggester_ui.py
+ 
