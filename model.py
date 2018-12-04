@@ -11,6 +11,7 @@ class OrientedSample:
 
     def __init__(self,sequence,insertPos,intronPos,hasIntron,isForward):
         insertArea = sequence[insertPos[0]-1:insertPos[1]]
+        newInsertPos = insertPos
         comp = {'A':'T','C':'G','T':'A','G':'C'}
         if not hasIntron:
             beginEx = insertPos[0]-1
@@ -19,14 +20,14 @@ class OrientedSample:
                 insertArea += sequence[beginEx:intron[0]-1]
                 beginEx = intron[1]
             insertArea += sequence[beginEx:insertPos[1]]
-            insertPos = (insertPos[0],insertPos[0]+len(insertArea)-1)
+            newInsertPos = (insertPos[0],insertPos[0]+len(insertArea)-1)
         if not isForward:
             insertArea = ''.join([comp[x] for x in insertArea[::-1]])
         introns = intronPos
         if hasIntron and not isForward:
             introns = [(insertPos[1]+insertPos[0]-x[1],insertPos[1]+insertPos[0]-x[0]) for x in intronPos]
         self.introns = introns
-        self.insertPos = insertPos
+        self.insertPos = newInsertPos
         self.sequence = sequence[:insertPos[0]-1] + insertArea + sequence[insertPos[1]:]
         self.hasIntron = hasIntron
         self.isForward = isForward
