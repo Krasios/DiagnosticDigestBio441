@@ -1,10 +1,14 @@
 def scoreOrientation(digest, ladder):
+    if (digest.cDNA1Frags == digest.cDNA2Frags) or (digest.gDNA1Frags == digest.gDNA2Frags):
+        return 0
     return (canDistinguish(sorted(set(digest.gDNA1Frags+digest.cDNA1Frags)),
         sorted(set(digest.gDNA2Frags+digest.cDNA2Frags)),ladder) +
     canDistinguish(sorted(set(digest.gDNA2Frags+digest.cDNA2Frags)),
         sorted(set(digest.gDNA1Frags+digest.cDNA1Frags)),ladder))/2
 
 def scoreIdentity(digest, ladder):
+    if (digest.gDNA1Frags == digest.cDNA1Frags) or (digest.gDNA2Frags == digest.cDNA2Frags):
+        return 0
     return (canDistinguish(sorted(set(digest.gDNA1Frags+digest.gDNA2Frags)), 
         sorted(set(digest.cDNA1Frags+digest.cDNA2Frags)),ladder) + 
     canDistinguish(sorted(set(digest.cDNA1Frags+digest.cDNA2Frags)),

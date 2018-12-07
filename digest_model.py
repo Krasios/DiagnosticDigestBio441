@@ -29,7 +29,7 @@ class SingleDigest:
 
     def processCuts(self,circular,seqLen,cuts):
         if cuts == []:
-            return []
+            return [seqLen]
         frag = []
         for i in range(1,len(cuts),1):
             frag.append(cuts[i]-cuts[i-1])
@@ -54,7 +54,7 @@ class DoubleDigest:
 
     def processCuts(self,circular,seqLen,cuts):
         if cuts == []:
-            return []
+            return [seqLen]
         frag = []
         for i in range(1,len(cuts),1):
             frag.append(cuts[i]-cuts[i-1])
